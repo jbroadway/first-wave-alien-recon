@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Abductable : MonoBehaviour {
 
+	private float initialPosY;
+
+	void Start () {
+		initialPosY = transform.position.y;
+	}
+
 	void OnTriggerEnter (Collider other) {
 		if (other.gameObject.name == "Tractor Beam") {
 			//Debug.Log ("Beam me up, Scotty!");
@@ -13,23 +19,20 @@ public class Abductable : MonoBehaviour {
 		}
 
 		if (other.gameObject.name == "SpaceShip Hull") {
-			// Double points at night
-			if (DayCycle.Instance.IsNight ()) {
-				Score.Instance.AddPoint ();
-				Score.Instance.AddPoint ();
+			Score.Instance.AddPoints ();
 
-			// Only one point during the day, because it's heatscore
-			} else {
-				Score.Instance.AddPoint ();
-			}
-
-			// Destroy after captured
-			Destroy (gameObject);
+			// Disable and reset after captured
+			gameObject.SetActive (false);
+			transform.position = new Vector3 (
+				transform.position.x,
+				initialPosY,
+				transform.position.z
+			);
 		}
 	}
 
 	IEnumerator BeamMeUp () {
-		yield return new WaitForSeconds (0.1f);
+		yield return new WaitForSeconds (0.2f);
 
 		while (! Inputs.Instance.BeamReleased ()) {
 			transform.position = new Vector3 (
@@ -42,7 +45,7 @@ public class Abductable : MonoBehaviour {
 		}
 
 		// Drop to ground
-		while (transform.position.y > 0f) {
+		while (transform.position.y > initialPosY) {
 			transform.position = new Vector3 (
 				transform.position.x,
 				transform.position.y - (Inputs.Instance.beamSpeed * 2f),
@@ -54,7 +57,7 @@ public class Abductable : MonoBehaviour {
 
 		transform.position = new Vector3 (
 			transform.position.x,
-			0f,
+			initialPosY,
 			transform.position.z
 		);
 	}

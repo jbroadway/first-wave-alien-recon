@@ -6,7 +6,7 @@ public class Inputs : MonoBehaviour {
 
 	public static Inputs Instance;
 
-	public GameObject camera;
+	public GameObject cam;
 
 	public GameObject skyDome;
 
@@ -55,10 +55,10 @@ public class Inputs : MonoBehaviour {
 			addZ = movementSpeed;
 		}
 
-		camera.transform.position = new Vector3 (
-			camera.transform.position.x + addX,
-			camera.transform.position.y,
-			camera.transform.position.z + addZ
+		cam.transform.position = new Vector3 (
+			cam.transform.position.x + addX,
+			cam.transform.position.y,
+			cam.transform.position.z + addZ
 		);
 
 		skyDome.transform.position = new Vector3 (

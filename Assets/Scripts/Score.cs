@@ -11,6 +11,8 @@ public class Score : MonoBehaviour {
 
 	private int score = 0;
 
+	private int abducted = 0;
+
 	void Awake () {
 		if (Instance == null) {
 			Instance = this;
@@ -19,9 +21,18 @@ public class Score : MonoBehaviour {
 		}
 	}
 
-	public void AddPoint () {
-		score++;
+	public void AddPoints () {
+		abducted++;
+
+		// Only one point during the day because it's heatscore
+		score += DayCycle.Instance.IsDay () ? 1 : 2;
 
 		scoreText.text = score.ToString ();
+
+		if (abducted >= AbducteePool.Instance.abductees.Length) {
+			AbducteePool.Instance.Reset ();
+			Intro.Instance.RunIntro ();
+			abducted = 0;
+		}
 	}
 }

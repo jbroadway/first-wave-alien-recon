@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Intro : MonoBehaviour {
 
+	public static Intro Instance;
+
 	public float speed = 5f;
 
 	public float pauseFor = 2f;
@@ -11,7 +13,26 @@ public class Intro : MonoBehaviour {
 	public GameObject[] enableAfter;
 
 	// Use this for initialization
-	IEnumerator Start () {
+	void Awake () {
+		if (Instance == null) {
+			Instance = this;
+		} else {
+			Debug.LogWarning ("There should be only one Intro component!");
+		}
+	}
+
+	// Use this for initialization
+	void Start () {
+		StartCoroutine (DoRunIntro ());
+	}
+
+	public void RunIntro () {
+		StopAllCoroutines ();
+		StartCoroutine (DoRunIntro ());
+	}
+
+	IEnumerator DoRunIntro () {
+		//gameObject.SetActive (true);
 		RectTransform rect = GetComponent<RectTransform> ();
 
 		while (rect.offsetMin.x < 0f) {
@@ -38,6 +59,10 @@ public class Intro : MonoBehaviour {
 			obj.SetActive (true);
 		}
 
-		gameObject.SetActive (false);
+		//gameObject.SetActive (false);
+		rect.offsetMin = new Vector2 (
+			-2000f,
+			rect.anchorMin.y
+		);
 	}
 }
