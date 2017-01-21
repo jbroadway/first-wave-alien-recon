@@ -31,7 +31,7 @@ public class DayCycle : MonoBehaviour {
 				curOffset = 0f;
 			}
 
-			Debug.Log (IsDay () ? "Day" : "Night");
+			//Debug.Log (IsDay () ? "Day" : "Night");
 
 			ren.material.SetTextureOffset ("_MainTex", new Vector2 (curOffset, 0f));
 
