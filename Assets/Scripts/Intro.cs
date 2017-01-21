@@ -32,7 +32,10 @@ public class Intro : MonoBehaviour {
 	}
 
 	IEnumerator DoRunIntro () {
-		//gameObject.SetActive (true);
+		foreach (GameObject obj in enableAfter) {
+			obj.SetActive (false);
+		}
+		
 		RectTransform rect = GetComponent<RectTransform> ();
 
 		while (rect.offsetMin.x < 0f) {
@@ -55,14 +58,14 @@ public class Intro : MonoBehaviour {
 			yield return null;
 		}
 
-		foreach (GameObject obj in enableAfter) {
-			obj.SetActive (true);
-		}
-
 		//gameObject.SetActive (false);
 		rect.offsetMin = new Vector2 (
 			-2000f,
 			rect.anchorMin.y
 		);
+
+		foreach (GameObject obj in enableAfter) {
+			obj.SetActive (true);
+		}
 	}
 }

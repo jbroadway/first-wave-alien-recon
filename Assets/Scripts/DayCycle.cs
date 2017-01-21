@@ -6,6 +6,10 @@ public class DayCycle : MonoBehaviour {
 
 	public static DayCycle Instance;
 
+	public delegate void ChangeDelegate (DayCycle dc);
+
+	public ChangeDelegate OnChange;
+
 	public float startOffset = 0.1f;
 
 	public float timeIncrement = 0.1f;
@@ -15,6 +19,8 @@ public class DayCycle : MonoBehaviour {
 	private float curOffset;
 
 	private MeshRenderer ren;
+
+	private bool day = true;
 
 	void Awake () {
 		if (Instance == null) {
@@ -41,9 +47,16 @@ public class DayCycle : MonoBehaviour {
 				curOffset = 0f;
 			}
 
-			//Debug.Log (IsDay () ? "Day" : "Night");
-
 			ren.material.SetTextureOffset ("_MainTex", new Vector2 (curOffset, 0f));
+
+			bool isDay = IsDay ();
+			if (isDay != day) {
+				day = isDay;
+
+				if (OnChange != null) {
+					OnChange (this);
+				}
+			}
 
 			yield return wfs;
 		}
@@ -58,5 +71,12 @@ public class DayCycle : MonoBehaviour {
 
 	public bool IsNight () {
 		return ! IsDay ();
+	}
+
+	public void ResetCycle () {
+		curOffset = startOffset;
+		day = true;
+
+		ren.material.SetTextureOffset ("_MainTex", new Vector2 (curOffset, 0f));
 	}
 }

@@ -24,6 +24,12 @@ public class Inputs : MonoBehaviour {
 
 	private bool beamReleased = true;
 
+	private Vector3 initialPosition;
+
+	private Vector3 initialCamPos;
+
+	private Vector3 initialSkyPos;
+
 	void Awake () {
 		if (Instance == null) {
 			Instance = this;
@@ -31,12 +37,36 @@ public class Inputs : MonoBehaviour {
 			Debug.LogWarning ("There should be only one Inputs component!");
 		}
 	}
+
+	void Start () {
+		initialPosition = UFO.transform.position;
+		initialCamPos = cam.transform.position;
+		initialSkyPos = skyDome.transform.position;
+	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (! TractorBeam ()) {
 			MoveShip ();
 		}
+	}
+
+	public void ResetUFO () {
+		UFO.transform.position = initialPosition;
+		cam.transform.position = initialCamPos;
+		skyDome.transform.position = initialSkyPos;
+		
+		tractorBeam.transform.localScale = new Vector3 (
+			tractorBeam.transform.localScale.x,
+			tractorBeam.transform.localScale.y,
+			closedBeam
+		);
+
+		tractorBeam.transform.localPosition = new Vector3 (
+			tractorBeam.transform.localPosition.x,
+			closedBeam,
+			tractorBeam.transform.localPosition.z
+		);
 	}
 
 	void MoveShip () {
