@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Inputs : MonoBehaviour {
 
+	public static Inputs Instance;
+
 	public GameObject earth;
 
 	public GameObject clouds;
@@ -17,6 +19,16 @@ public class Inputs : MonoBehaviour {
 	public float openBeam = 40f;
 
 	public float beamSpeed = 0.5f;
+
+	private bool beamReleased = true;
+
+	void Awake () {
+		if (Instance == null) {
+			Instance = this;
+		} else {
+			Debug.LogWarning ("There should be only one Inputs component!");
+		}
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -75,6 +87,7 @@ public class Inputs : MonoBehaviour {
 			}
 
 			open = true;
+			beamReleased = false;
 
 		} else {
 			// Retract beam
@@ -93,8 +106,14 @@ public class Inputs : MonoBehaviour {
 
 				open = true;
 			}
+
+			beamReleased = true;
 		}
 
 		return open;
+	}
+
+	public bool BeamReleased () {
+		return beamReleased;
 	}
 }

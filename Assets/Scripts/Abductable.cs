@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class Abductable : MonoBehaviour {
 
-	private Vector3 initialPos;
-
-	void Start () {
-		initialPos = transform.position;
-	}
-
 	void OnTriggerEnter (Collider other) {
 		if (other.gameObject.name == "Tractor Beam") {
-			Debug.Log ("Beam me up, Scotty!");
+			//Debug.Log ("Beam me up, Scotty!");
 
-			// TODO: Beam it up
+			StopAllCoroutines ();
+			StartCoroutine (BeamMeUp ());
 		}
 
-		if (other.gameObject.name == "UFO") {
+		if (other.gameObject.name == "SpaceShip Hull") {
 			// Double points at night
 			if (DayCycle.Instance.IsNight ()) {
 				Score.Instance.AddPoint ();
@@ -31,5 +26,36 @@ public class Abductable : MonoBehaviour {
 			// Destroy after captured
 			Destroy (gameObject);
 		}
+	}
+
+	IEnumerator BeamMeUp () {
+		yield return new WaitForSeconds (0.1f);
+
+		while (! Inputs.Instance.BeamReleased ()) {
+			transform.position = new Vector3 (
+				transform.position.x,
+				transform.position.y + Inputs.Instance.beamSpeed,
+				transform.position.z
+			);
+
+			yield return null;
+		}
+
+		// Drop to ground
+		while (transform.position.y > 0f) {
+			transform.position = new Vector3 (
+				transform.position.x,
+				transform.position.y - (Inputs.Instance.beamSpeed * 2f),
+				transform.position.z
+			);
+
+			yield return null;
+		}
+
+		transform.position = new Vector3 (
+			transform.position.x,
+			0f,
+			transform.position.z
+		);
 	}
 }
