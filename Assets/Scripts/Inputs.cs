@@ -6,9 +6,11 @@ public class Inputs : MonoBehaviour {
 
 	public static Inputs Instance;
 
-	public GameObject earth;
+	public GameObject camera;
 
-	public GameObject clouds;
+	public GameObject skyDome;
+
+	public GameObject UFO;
 
 	public float movementSpeed = 0.05f;
 
@@ -42,27 +44,33 @@ public class Inputs : MonoBehaviour {
 		float addZ = 0f;
 
 		if (Input.GetKey (KeyCode.LeftArrow)) {
-			addX = movementSpeed;
-		} else if (Input.GetKey (KeyCode.RightArrow)) {
 			addX = -movementSpeed;
+		} else if (Input.GetKey (KeyCode.RightArrow)) {
+			addX = movementSpeed;
 		}
 
 		if (Input.GetKey (KeyCode.DownArrow)) {
-			addZ = movementSpeed;
-		} else if (Input.GetKey (KeyCode.UpArrow)) {
 			addZ = -movementSpeed;
+		} else if (Input.GetKey (KeyCode.UpArrow)) {
+			addZ = movementSpeed;
 		}
 
-		earth.transform.position = new Vector3 (
-			earth.transform.position.x + addX,
-			earth.transform.position.y,
-			earth.transform.position.z + addZ
+		camera.transform.position = new Vector3 (
+			camera.transform.position.x + addX,
+			camera.transform.position.y,
+			camera.transform.position.z + addZ
 		);
 
-		clouds.transform.position = new Vector3 (
-			clouds.transform.position.x + addX,
-			clouds.transform.position.y,
-			clouds.transform.position.z + addZ
+		skyDome.transform.position = new Vector3 (
+			skyDome.transform.position.x + addX,
+			skyDome.transform.position.y,
+			skyDome.transform.position.z + addZ
+		);
+
+		UFO.transform.position = new Vector3 (
+			UFO.transform.position.x + addX,
+			UFO.transform.position.y,
+			UFO.transform.position.z + addZ
 		);
 	}
 
