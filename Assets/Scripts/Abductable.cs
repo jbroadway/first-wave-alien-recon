@@ -10,15 +10,26 @@ public class Abductable : MonoBehaviour {
 		initialPos = transform.position;
 	}
 
-	void OnCollisionEnter (Collision collision) {
-		foreach (ContactPoint contact in collision.contacts) {
-			if (contact.otherCollider.gameObject.name == "Tractor Beam") {
-				Debug.Log ("Beam me up, Scotty!");
-			}
+	void OnTriggerEnter (Collider other) {
+		if (other.gameObject.name == "Tractor Beam") {
+			Debug.Log ("Beam me up, Scotty!");
 
-			if (contact.otherCollider.gameObject.name == "UFO") {
+			// TODO: Beam it up
+		}
+
+		if (other.gameObject.name == "UFO") {
+			// Double points at night
+			if (DayCycle.Instance.IsNight ()) {
+				Score.Instance.AddPoint ();
+				Score.Instance.AddPoint ();
+
+			// Only one point during the day, because it's heatscore
+			} else {
 				Score.Instance.AddPoint ();
 			}
-        }
+
+			// Destroy after captured
+			Destroy (gameObject);
+		}
 	}
 }

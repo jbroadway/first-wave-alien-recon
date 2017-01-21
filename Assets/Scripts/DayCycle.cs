@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DayCycle : MonoBehaviour {
 
+	public static DayCycle Instance;
+
 	public float startOffset = 0.1f;
 
 	public float timeIncrement = 0.1f;
@@ -13,6 +15,14 @@ public class DayCycle : MonoBehaviour {
 	private float curOffset;
 
 	private MeshRenderer ren;
+
+	void Awake () {
+		if (Instance == null) {
+			Instance = this;
+		} else {
+			Debug.LogWarning ("There should be only one DayCycle component!");
+		}
+	}
 
 	// Use this for initialization
 	void Start () {
