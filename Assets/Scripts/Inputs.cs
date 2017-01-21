@@ -17,15 +17,6 @@ public class Inputs : MonoBehaviour {
 	public float openBeam = 40f;
 
 	public float beamSpeed = 0.5f;
-
-	private float initialBeamY;
-
-	private float initialBeamScale;
-
-	void Start () {
-		initialBeamY = tractorBeam.transform.position.y;
-		initialBeamScale = tractorBeam.transform.localScale.z;
-	}
 	
 	// Update is called once per frame
 	void Update () {
