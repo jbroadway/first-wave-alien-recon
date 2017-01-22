@@ -20,6 +20,8 @@ public class Score : MonoBehaviour {
 
 	public Text finalScoreText;
 
+	public Text timerText;
+
 	public GameObject sun;
 
 	public GameObject moon;

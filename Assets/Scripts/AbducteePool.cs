@@ -10,6 +10,8 @@ public class AbducteePool : MonoBehaviour {
 
 	public GameObject targetCam;
 
+	public GameObject targetImage;
+
 	// Use this for initialization
 	void Awake () {
 		if (Instance == null) {
@@ -64,11 +66,13 @@ public class AbducteePool : MonoBehaviour {
 		int abducted = Score.Instance.Abducted ();
 
 		if (abducted >= abductees.Length) {
+			targetImage.SetActive (false);
 			return;
 		}
 
 		Abductable ab = abductees[abducted];
 		if (ab == null) {
+			targetImage.SetActive (false);
 			return;
 		}
 
