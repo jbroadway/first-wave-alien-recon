@@ -50,6 +50,10 @@ public class Inputs : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.Quit ();
+		}
+
 		if (! TractorBeam ()) {
 			MoveShip ();
 		}
@@ -77,15 +81,18 @@ public class Inputs : MonoBehaviour {
 		float addX = 0f;
 		float addZ = 0f;
 
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+		float xAxis = Input.GetAxis ("Horizontal");
+		float yAxis = Input.GetAxis ("Vertical");
+
+		if (Input.GetKey (KeyCode.LeftArrow) || xAxis < 0f) {
 			addX = -movementSpeed;
-		} else if (Input.GetKey (KeyCode.RightArrow)) {
+		} else if (Input.GetKey (KeyCode.RightArrow) || xAxis > 0f) {
 			addX = movementSpeed;
 		}
 
-		if (Input.GetKey (KeyCode.DownArrow)) {
+		if (Input.GetKey (KeyCode.DownArrow) || yAxis < 0f) {
 			addZ = -movementSpeed;
-		} else if (Input.GetKey (KeyCode.UpArrow)) {
+		} else if (Input.GetKey (KeyCode.UpArrow) || yAxis > 0f) {
 			addZ = movementSpeed;
 		}
 
@@ -111,7 +118,7 @@ public class Inputs : MonoBehaviour {
 	bool TractorBeam () {
 		bool open = false;
 
-		if (Input.GetKey (KeyCode.Space)) {
+		if (Input.GetKey (KeyCode.Space) || Input.GetKey (KeyCode.Period) || Input.GetKey (KeyCode.Slash) || Input.GetButton ("Fire1")) {
 			// Lower beam
 			if (tractorBeam.transform.localScale.z < openBeam) {
 
