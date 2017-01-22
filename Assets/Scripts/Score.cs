@@ -101,6 +101,9 @@ public class Score : MonoBehaviour {
 
 		if (abducted >= AbducteePool.Instance.abductees.Length) {
 			StartCoroutine (ResetGame ());
+		} else {
+			// Give time bonus
+			timeLeft += 5f;
 		}
 	}
 
