@@ -14,6 +14,12 @@ public class Score : MonoBehaviour {
 
 	public ScoreEvent OnScore = new ScoreEvent ();
 
+	public int dayPoints = 2;
+
+	public int nightPoints = 5;
+
+	public int penaltyPoints = -1;
+
 	public Text scoreText;
 
 	public Text highestScoreText;
@@ -87,7 +93,7 @@ public class Score : MonoBehaviour {
 		abducted++;
 
 		// Only one point during the day because it's heatscore
-		score += DayCycle.Instance.IsDay () ? 1 : 2;
+		score += DayCycle.Instance.IsDay () ? dayPoints : nightPoints;
 
 		UpdateHighestScore ();
 
@@ -111,7 +117,7 @@ public class Score : MonoBehaviour {
 		Debug.Log ("Penalize()");
 
 		// Lose a point for getting the wrong person
-		score -= (score > 0) ? 1 : 0;
+		score += (score > 0) ? penaltyPoints : 0;
 
 		UpdateHighestScore ();
 

@@ -8,8 +8,14 @@ public class Abductable : MonoBehaviour {
 
 	private float initialPosY;
 
+	private bool beingAbducted = false;
+
 	void Start () {
 		initialPosY = transform.position.y;
+	}
+
+	public bool IsBeingAbducted () {
+		return beingAbducted;
 	}
 
 	void OnTriggerEnter (Collider other) {
@@ -51,11 +57,15 @@ public class Abductable : MonoBehaviour {
 					transform.position.z
 				);
 			}
+
+			beingAbducted = false;
 		}
 	}
 
 	IEnumerator BeamMeUp () {
 		yield return new WaitForSeconds (0.2f);
+
+		beingAbducted = true;
 
 		while (! Inputs.Instance.BeamReleased ()) {
 			transform.position = new Vector3 (
@@ -83,5 +93,7 @@ public class Abductable : MonoBehaviour {
 			initialPosY,
 			transform.position.z
 		);
+
+		beingAbducted = false;
 	}
 }

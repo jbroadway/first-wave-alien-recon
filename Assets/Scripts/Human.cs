@@ -6,8 +6,19 @@ public class Human : MonoBehaviour {
 
 	public Animator animator;
 
+	private Abductable abductable;
+
+	void Start () {
+		abductable = GetComponent<Abductable> ();
+		animator.speed = 2f;
+	}
+
 	// Use this for initialization
 	void Update () {
-		animator.Play ("Idle");
+		if (abductable.IsBeingAbducted ()) {
+			animator.Play ("Run_Static");
+		} else {
+			animator.Play ("Idle");
+		}
 	}
 }
