@@ -1,13 +1,14 @@
 # First Wave: Alien Recon
 
-You are an alien civilization sent on a reconnaissance mission to learn about
-a planet called Earth, and its dominant species, who call themselves humans.
+> Made for the [Global Game Jam 2017](http://globalgamejam.org/2017/games/first-wave-alien-recon).
+
+You are a UFO from an alien civilization sent on a reconnaissance mission to
+learn about a planet called Earth, and its dominant species, who call themselves
+humans.
 
 Your job is to abduct various specimens, but to be discreet: Get more points
 for abductions made under the cloak of night. And be careful, you can lose
 points by abducting the wrong target at the wrong time.
-
-> Made for the [Global Game Jam 2017](http://globalgamejam.org/).
 
 ## Credits
 
