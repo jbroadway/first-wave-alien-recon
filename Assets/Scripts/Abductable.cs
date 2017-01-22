@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Abductable : MonoBehaviour {
 
+	public MeshRenderer mapMarker;
+
 	private float initialPosY;
 
 	void Start () {

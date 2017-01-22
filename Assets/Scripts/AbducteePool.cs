@@ -12,6 +12,10 @@ public class AbducteePool : MonoBehaviour {
 
 	public GameObject targetImage;
 
+	public Material mapAbducteeMat;
+
+	public Material mapTargetMat;
+
 	// Use this for initialization
 	void Awake () {
 		if (Instance == null) {
@@ -70,13 +74,21 @@ public class AbducteePool : MonoBehaviour {
 			return;
 		}
 
-		Abductable ab = abductees[abducted];
-		if (ab == null) {
+		Abductable activeAb = abductees[abducted];
+		if (activeAb == null) {
 			targetImage.SetActive (false);
 			return;
 		}
 
-		targetCam.transform.SetParent (ab.transform);
+		foreach (Abductable ab in abductees) {
+			if (ab == activeAb) {
+				ab.mapMarker.material = mapTargetMat;
+			} else {
+				ab.mapMarker.material = mapAbducteeMat;
+			}
+		}
+
+		targetCam.transform.SetParent (activeAb.transform);
 
 		targetCam.transform.localPosition = new Vector3 (0f, 2f, 2.5f);
 
