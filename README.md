@@ -1,4 +1,4 @@
-# First Wave: Recon
+# First Wave: Alien Recon
 
 You are an alien civilization sent on a reconnaissance mission to learn about
 a planet called Earth, and its dominant species, who call themselves humans.
