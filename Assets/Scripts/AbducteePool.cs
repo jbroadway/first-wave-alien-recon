@@ -31,13 +31,13 @@ public class AbducteePool : MonoBehaviour {
 	
 	void ShufflePositions () {
 		// Randomize positions
-		Vector3 tmpV;
+		/*Vector3 tmpV;
 		for (int i = 0; i < abductees.Length; i++) {
 			var r = Random.Range (0, i);
 			tmpV = abductees[i].transform.position;
 			abductees[i].transform.position = abductees[r].transform.position;
 			abductees[r].transform.position = tmpV;
-		}
+		}*/
 
 		// Randomize order to find them
 		Abductable tmpA;

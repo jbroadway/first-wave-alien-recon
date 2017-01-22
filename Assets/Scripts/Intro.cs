@@ -60,7 +60,7 @@ public class Intro : MonoBehaviour {
 
 		//gameObject.SetActive (false);
 		rect.offsetMin = new Vector2 (
-			-2000f,
+			-3000f,
 			rect.anchorMin.y
 		);
 

@@ -18,6 +18,8 @@ public class Score : MonoBehaviour {
 
 	public Text highestScoreText;
 
+	public Text finalScoreText;
+
 	public GameObject sun;
 
 	public GameObject moon;
@@ -67,26 +69,25 @@ public class Score : MonoBehaviour {
 
 	public void Penalize () {
 		Debug.Log ("Penalize()");
-		abducted++;
 
 		// Lose a point for getting the wrong person
-		score -= 1;
+		score -= (score > 0) ? -1 : 0;
 
 		UpdateHighestScore ();
 
 		scoreText.text = score.ToString ();
-
-		if (OnScore != null) {
-			OnScore.Invoke (this);
-		}
-
-		if (abducted >= AbducteePool.Instance.abductees.Length) {
-			StartCoroutine (ResetGame ());
-		}
 	}
 
 	IEnumerator ResetGame () {
 		yield return new WaitForSeconds (0.5f);
+
+		finalScoreText.text = "Final Score: " + score;
+		finalScoreText.gameObject.SetActive (true);
+
+		yield return new WaitForSeconds (1.5f);
+
+		finalScoreText.gameObject.SetActive (false);
+
 		AbducteePool.Instance.Reset ();
 		Intro.Instance.RunIntro ();
 		Inputs.Instance.ResetUFO ();

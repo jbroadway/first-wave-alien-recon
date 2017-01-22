@@ -30,6 +30,8 @@ public class Inputs : MonoBehaviour {
 
 	private Vector3 initialSkyPos;
 
+	private AudioSource audioSource;
+
 	void Awake () {
 		if (Instance == null) {
 			Instance = this;
@@ -39,6 +41,8 @@ public class Inputs : MonoBehaviour {
 	}
 
 	void Start () {
+		audioSource = GetComponent<AudioSource> ();
+
 		initialPosition = UFO.transform.position;
 		initialCamPos = cam.transform.position;
 		initialSkyPos = skyDome.transform.position;
@@ -126,6 +130,7 @@ public class Inputs : MonoBehaviour {
 
 			open = true;
 			beamReleased = false;
+			audioSource.mute = false;
 
 		} else {
 			// Retract beam
@@ -146,6 +151,7 @@ public class Inputs : MonoBehaviour {
 			}
 
 			beamReleased = true;
+			audioSource.mute = true;
 		}
 
 		return open;

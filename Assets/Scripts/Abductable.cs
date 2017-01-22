@@ -21,17 +21,25 @@ public class Abductable : MonoBehaviour {
 		if (other.gameObject.name == "SpaceShip Hull") {
 			if (this == AbducteePool.Instance.abductees[Score.Instance.Abducted ()]) {
 				Score.Instance.AddPoints ();
+
+				// Disable and reset after captured
+				gameObject.SetActive (false);
+				transform.position = new Vector3 (
+					transform.position.x,
+					initialPosY,
+					transform.position.z
+				);
+
 			} else {
 				Score.Instance.Penalize ();
-			}
 
-			// Disable and reset after captured
-			gameObject.SetActive (false);
-			transform.position = new Vector3 (
-				transform.position.x,
-				initialPosY,
-				transform.position.z
-			);
+				// Reset after penalizing
+				transform.position = new Vector3 (
+					transform.position.x,
+					initialPosY,
+					transform.position.z
+				);
+			}
 		}
 	}
 
