@@ -2,7 +2,7 @@
 
 > Made for the [Global Game Jam 2017](http://globalgamejam.org/2017/games/first-wave-alien-recon).
 
-![First Wave: Alien Recon - Screenshot of title screen](first-wave-screenshot.png)
+![First Wave: Alien Recon - Screenshot of title screen](https://jbroadway.github.io/first-wave-alien-recon/first-wave-screenshot.png)
 
 You are a UFO from an alien civilization sent on a reconnaissance mission to
 learn about a planet called Earth, and its dominant species, who call themselves
