@@ -67,5 +67,7 @@ public class Intro : MonoBehaviour {
 		foreach (GameObject obj in enableAfter) {
 			obj.SetActive (true);
 		}
+
+		Score.Instance.StartTimer ();
 	}
 }

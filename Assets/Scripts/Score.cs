@@ -22,6 +22,8 @@ public class Score : MonoBehaviour {
 
 	public Text timerText;
 
+	public Text timeBonusText;
+
 	public GameObject sun;
 
 	public GameObject moon;
@@ -35,6 +37,10 @@ public class Score : MonoBehaviour {
 	private int abducted = 0;
 
 	private AudioSource audioSource;
+
+	private float timeLeft = 60f;
+
+	private bool timeRunning = false;
 
 	void Awake () {
 		if (Instance == null) {
@@ -51,6 +57,25 @@ public class Score : MonoBehaviour {
 
 		yield return new WaitUntil (() => DayCycle.Instance != null);
 		Debug.Log ("Score getting a late start");
+	}
+
+	void Update () {
+		if (timeRunning) {
+			timeLeft -= Time.deltaTime;
+			timerText.text = ":" + Mathf.FloorToInt (timeLeft).ToString ().PadLeft (2, '0');
+
+			if (timeLeft < 0f) {
+				audioSource.PlayOneShot (pointsClip);
+				StartCoroutine (ResetGame ());
+			}
+		} else {
+			timeLeft = 60f;
+			timerText.text = ":60";
+		}
+	}
+
+	public void StartTimer () {
+		timeRunning = true;
 	}
 
 	public int Abducted () {
@@ -93,14 +118,28 @@ public class Score : MonoBehaviour {
 	}
 
 	IEnumerator ResetGame () {
+		timeRunning = false;
+		int timeBonus = Mathf.FloorToInt (timeLeft);
+
 		yield return new WaitForSeconds (0.5f);
+
+		if (timeBonus > 0) {
+			timeBonusText.text = "Time Bonus: " + timeBonus;
+			score += timeBonus;
+		} else {
+			timeBonusText.text = "Time Bonus: 0";
+		}
+		timeBonusText.gameObject.SetActive (true);
 
 		finalScoreText.text = "Final Score: " + score;
 		finalScoreText.gameObject.SetActive (true);
 
-		yield return new WaitForSeconds (1.5f);
+		UpdateHighestScore ();
+
+		yield return new WaitForSeconds (2.5f);
 
 		finalScoreText.gameObject.SetActive (false);
+		timeBonusText.gameObject.SetActive (false);
 
 		Intro.Instance.RunIntro ();
 		Inputs.Instance.ResetUFO ();
