@@ -100,7 +100,6 @@ public class Score : MonoBehaviour {
 
 		finalScoreText.gameObject.SetActive (false);
 
-		AbducteePool.Instance.Reset ();
 		Intro.Instance.RunIntro ();
 		Inputs.Instance.ResetUFO ();
 		DayCycle.Instance.ResetCycle ();
@@ -109,6 +108,7 @@ public class Score : MonoBehaviour {
 		abducted = 0;
 		score = 0;
 		scoreText.text = score.ToString ();
+		AbducteePool.Instance.Reset ();
 	}
 
 	void UpdateHighestScore () {
