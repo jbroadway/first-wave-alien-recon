@@ -146,10 +146,9 @@ public class Inputs : MonoBehaviour {
 					tractorBeam.transform.localPosition.y + beamSpeed,
 					tractorBeam.transform.localPosition.z
 				);
-
-				open = true;
 			}
 
+			open = false;
 			beamReleased = true;
 			audioSource.mute = true;
 		}
