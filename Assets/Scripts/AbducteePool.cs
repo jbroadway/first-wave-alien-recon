@@ -8,6 +8,8 @@ public class AbducteePool : MonoBehaviour {
 
 	public Abductable[] abductees;
 
+	public GameObject targetCam;
+
 	// Use this for initialization
 	void Awake () {
 		if (Instance == null) {
@@ -17,9 +19,14 @@ public class AbducteePool : MonoBehaviour {
 		}
 
 		abductees = Object.FindObjectsOfType<Abductable> ();
-		//Debug.Log ("Abductees: " + abductees.Length);
+		Debug.Log ("Abductees: " + abductees.Length);
+	}
 
-		ShufflePositions ();
+	IEnumerator Start () {
+		yield return new WaitUntil (() => Score.Instance != null);
+		Debug.Log ("AbducteePool is getting a late start");
+
+		Reset ();
 	}
 	
 	void ShufflePositions () {
@@ -48,5 +55,31 @@ public class AbducteePool : MonoBehaviour {
 		foreach (Abductable ab in abductees) {
 			ab.gameObject.SetActive (true);
 		}
+
+		NextTarget ();
+	}
+
+	public void NextTarget () {
+		Debug.Log ("NextTarget()");
+		int abducted = Score.Instance.Abducted ();
+
+		if (abducted >= abductees.Length) {
+			return;
+		}
+
+		Abductable ab = abductees[abducted];
+		if (ab == null) {
+			return;
+		}
+
+		targetCam.transform.SetParent (ab.transform);
+
+		targetCam.transform.localPosition = new Vector3 (0f, 2f, 2.5f);
+
+		targetCam.transform.localRotation = Quaternion.Euler (new Vector3 (0f, 180f, 0f));
+	}
+
+	public void HandleScore (Score score) {
+		NextTarget ();
 	}
 }

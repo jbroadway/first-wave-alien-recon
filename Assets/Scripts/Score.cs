@@ -1,11 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Score : MonoBehaviour {
 
 	public static Score Instance;
+
+	[Serializable]
+	public class ScoreEvent : UnityEvent<Score> { }
+
+	public ScoreEvent OnScore = new ScoreEvent ();
 
 	public Text scoreText;
 
@@ -31,11 +38,15 @@ public class Score : MonoBehaviour {
 
 	IEnumerator Start () {
 		yield return new WaitUntil (() => DayCycle.Instance != null);
+		Debug.Log ("Score getting a late start");
+	}
 
-		DayCycle.Instance.OnChange += HandleDayCycleChange;
+	public int Abducted () {
+		return abducted;
 	}
 
 	public void AddPoints () {
+		Debug.Log ("AddPoints()");
 		abducted++;
 
 		// Only one point during the day because it's heatscore
@@ -44,6 +55,30 @@ public class Score : MonoBehaviour {
 		UpdateHighestScore ();
 
 		scoreText.text = score.ToString ();
+
+		if (OnScore != null) {
+			OnScore.Invoke (this);
+		}
+
+		if (abducted >= AbducteePool.Instance.abductees.Length) {
+			StartCoroutine (ResetGame ());
+		}
+	}
+
+	public void Penalize () {
+		Debug.Log ("Penalize()");
+		abducted++;
+
+		// Lose a point for getting the wrong person
+		score -= 1;
+
+		UpdateHighestScore ();
+
+		scoreText.text = score.ToString ();
+
+		if (OnScore != null) {
+			OnScore.Invoke (this);
+		}
 
 		if (abducted >= AbducteePool.Instance.abductees.Length) {
 			StartCoroutine (ResetGame ());
@@ -60,6 +95,7 @@ public class Score : MonoBehaviour {
 		moon.SetActive (false);
 		abducted = 0;
 		score = 0;
+		scoreText.text = score.ToString ();
 	}
 
 	void UpdateHighestScore () {

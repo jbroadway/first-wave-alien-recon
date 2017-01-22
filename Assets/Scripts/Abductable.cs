@@ -19,7 +19,11 @@ public class Abductable : MonoBehaviour {
 		}
 
 		if (other.gameObject.name == "SpaceShip Hull") {
-			Score.Instance.AddPoints ();
+			if (this == AbducteePool.Instance.abductees[Score.Instance.Abducted ()]) {
+				Score.Instance.AddPoints ();
+			} else {
+				Score.Instance.Penalize ();
+			}
 
 			// Disable and reset after captured
 			gameObject.SetActive (false);

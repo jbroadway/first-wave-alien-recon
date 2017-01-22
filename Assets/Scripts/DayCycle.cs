@@ -1,14 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DayCycle : MonoBehaviour {
 
 	public static DayCycle Instance;
 
-	public delegate void ChangeDelegate (DayCycle dc);
+	[Serializable]
+	public class DayCycleEvent : UnityEvent<DayCycle> { }
 
-	public ChangeDelegate OnChange;
+	public DayCycleEvent OnChange = new DayCycleEvent ();
 
 	public float startOffset = 0.1f;
 
@@ -54,7 +57,7 @@ public class DayCycle : MonoBehaviour {
 				day = isDay;
 
 				if (OnChange != null) {
-					OnChange (this);
+					OnChange.Invoke (this);
 				}
 			}
 
