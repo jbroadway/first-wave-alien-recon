@@ -12,6 +12,8 @@ Your job is to abduct various specimens, but to be discreet: Get more points
 for abductions made under the cloak of night. And be careful, you can lose
 points by abducting the wrong target at the wrong time.
 
+**[Download or play on itch.io!](https://jbroadway.itch.io/first-wave-alien-recon)**
+
 ## Credits
 
 Built with [Unity3D](https://unity3d.com).
