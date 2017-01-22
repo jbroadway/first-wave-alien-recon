@@ -24,9 +24,15 @@ public class Score : MonoBehaviour {
 
 	public GameObject moon;
 
+	public AudioClip pointsClip;
+
+	public AudioClip penaltyClip;
+
 	private int score = 0;
 
 	private int abducted = 0;
+
+	private AudioSource audioSource;
 
 	void Awake () {
 		if (Instance == null) {
@@ -39,6 +45,8 @@ public class Score : MonoBehaviour {
 	}
 
 	IEnumerator Start () {
+		audioSource = GetComponent<AudioSource> ();
+
 		yield return new WaitUntil (() => DayCycle.Instance != null);
 		Debug.Log ("Score getting a late start");
 	}
@@ -58,6 +66,8 @@ public class Score : MonoBehaviour {
 
 		scoreText.text = score.ToString ();
 
+		audioSource.PlayOneShot (pointsClip);
+
 		if (OnScore != null) {
 			OnScore.Invoke (this);
 		}
@@ -71,11 +81,13 @@ public class Score : MonoBehaviour {
 		Debug.Log ("Penalize()");
 
 		// Lose a point for getting the wrong person
-		score -= (score > 0) ? -1 : 0;
+		score -= (score > 0) ? 1 : 0;
 
 		UpdateHighestScore ();
 
 		scoreText.text = score.ToString ();
+
+		audioSource.PlayOneShot (penaltyClip);
 	}
 
 	IEnumerator ResetGame () {
