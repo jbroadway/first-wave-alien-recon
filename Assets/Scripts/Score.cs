@@ -20,6 +20,8 @@ public class Score : MonoBehaviour {
 
 	public int penaltyPoints = -1;
 
+	public float timeLimit = 90f;
+
 	public Text scoreText;
 
 	public Text highestScoreText;
@@ -44,7 +46,7 @@ public class Score : MonoBehaviour {
 
 	private AudioSource audioSource;
 
-	private float timeLeft = 60f;
+	private float timeLeft;
 
 	private bool timeRunning = false;
 
@@ -54,6 +56,8 @@ public class Score : MonoBehaviour {
 		} else {
 			Debug.LogWarning ("There should be only one Score component!");
 		}
+
+		timeLeft = Mathf.FloorToInt (timeLimit);
 
 		UpdateHighestScore ();
 	}
@@ -68,15 +72,15 @@ public class Score : MonoBehaviour {
 	void Update () {
 		if (timeRunning) {
 			timeLeft -= Time.deltaTime;
-			timerText.text = ":" + Mathf.FloorToInt (timeLeft).ToString ().PadLeft (2, '0');
+			timerText.text = Mathf.FloorToInt (timeLeft).ToString ().PadLeft (2, '0');
 
 			if (timeLeft < 0f) {
 				audioSource.PlayOneShot (pointsClip);
 				StartCoroutine (ResetGame ());
 			}
 		} else {
-			timeLeft = 60f;
-			timerText.text = ":60";
+			timeLeft = timeLimit;
+			timerText.text = Mathf.FloorToInt (timeLimit).ToString ();
 		}
 	}
 
